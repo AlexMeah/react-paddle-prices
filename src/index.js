@@ -7,15 +7,22 @@ function preload(products) {
     const _products = Array.isArray(products) ? products : [products];
 
     return Promise.all(
-        _products.map(
-            id =>
-                new Promise(res => {
-                    window.Paddle.Product.Prices(id, prices => {
-                        Cache.set(id, prices);
-                        res();
-                    });
-                })
-        )
+        _products.map(id => {
+            if (Cache.has(`${id}_loading`)) {
+                return Cache.get(`${id}_loading`);
+            }
+
+            const prom = new Promise(res => {
+                window.Paddle.Product.Prices(id, prices => {
+                    Cache.set(id, prices);
+                    res();
+                });
+            });
+
+            Cache.set(`${id}_loading`, prom);
+
+            return prom;
+        })
     );
 }
 function ReactPaddlePricesHOC(WrappedComponent) {
