@@ -12,8 +12,8 @@ function preload(products) {
                 new Promise(res => {
                     window.Paddle.Product.Prices(id, prices => {
                         Cache.set(id, prices);
+                        res();
                     });
-                    res();
                 })
         )
     );
@@ -22,19 +22,15 @@ function ReactPaddlePricesHOC(WrappedComponent) {
     return class extends React.Component {
         displayName = provideDisplayName('PaddlePrices', WrappedComponent);
 
-        constructor(props) {
-            super(props);
+        state = {
+            price: Cache.get(this.props.productId)
+        };
 
+        componentDidMount() {
             if (!Cache.has(this.props.productId)) {
                 preload(this.props.productId).then(this.setPrice);
-            } else {
-                this.setPrice();
             }
         }
-
-        state = {
-            price: undefined
-        };
 
         setPrice = () => {
             this.setState({
