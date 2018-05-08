@@ -1,0 +1,39 @@
+{
+    "env": {
+        "node": true,
+        "browser": true,
+        "jest": true
+    },
+    "parser": "babel-eslint",
+    "extends": [
+        "airbnb",
+        "prettier"
+    ],
+    "plugins": [
+        "prettier"
+    ],
+    "rules": {
+        "react/no-typos": "off",
+        "react/jsx-indent": "off",
+        "react/jsx-indent-props": "off",
+        "react/jsx-closing-bracket-location": 0,
+        "no-underscore-dangle": 0,
+        "consistent-return": 0,
+        "prettier/prettier": ["error", {
+            "singleQuote": true,
+            "tabWidth": 4
+        }],
+        "new-cap": 0,
+        "id-length": 0,
+        "no-multiple-empty-lines": [2, {
+            "max": 1
+        }],
+        "react/prop-types": 1,
+        "react/jsx-filename-extension": 0,
+        "import/no-extraneous-dependencies": ["error", {
+            "devDependencies": [
+                "**/test.js"
+            ]
+        }]
+    }
+}
